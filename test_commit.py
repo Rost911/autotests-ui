@@ -1,1 +1,0 @@
-print("Initial commit for UI course")
