@@ -13,7 +13,6 @@ class LoginFormComponent(BaseComponent):
 
     def fill(self, email: str, password: str):
         self.email_input.fill(email)
-
         self.password_input.fill(password)
 
 
