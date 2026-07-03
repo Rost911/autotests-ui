@@ -26,19 +26,14 @@ class CreateCourseFormComponent(BaseComponent):
             min_score: str
     ):
         self.title_input.fill(title)
-        expect(self.title_input).to_have_value(title)
 
         self.estimated_time_input.fill(estimated_time)
-        expect(self.estimated_time_input).to_have_value(estimated_time)
 
         self.description_textarea.fill(description)
-        expect(self.description_textarea).to_have_value(description)
 
         self.max_score_input.fill(max_score)
-        expect(self.max_score_input).to_have_value(max_score)
 
         self.min_score_input.fill(min_score)
-        expect(self.min_score_input).to_have_value(min_score)
 
     def check_visible(
             self,
