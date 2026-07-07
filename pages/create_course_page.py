@@ -8,10 +8,14 @@ from components.courses.create_course_form_component import CreateCourseFormComp
 from components.courses.create_course_toolbar_view_component import CreateCourseToolbarViewComponent
 from components.courses.create_course_exercises_toolbar_view_component import CreateCourseExercisesToolbarViewComponent
 
+from components.navigation.navbar_component import NavbarComponent
+from components.navigation.sidebar_component import SidebarComponent
 
 class CreateCoursePage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
+        self.navbar = NavbarComponent(page)
+        self.sidebar = SidebarComponent(page)
 
         self.create_course_form_component = CreateCourseFormComponent(page)
         self.create_course_toolbar_view_component = CreateCourseToolbarViewComponent(page)
