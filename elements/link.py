@@ -1,5 +1,7 @@
 from elements.base_element import BaseElement
+from playwright.sync_api import Locator
 
 
 class Link(BaseElement):
-    pass
+    def get_locator(self, **kwargs) -> Locator:
+        return super().get_locator(**kwargs).locator('a')

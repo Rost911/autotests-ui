@@ -5,7 +5,6 @@ from elements.base_element import BaseElement
 
 class Textarea(BaseElement):
     def get_locator(self, **kwargs) -> Locator:
-        # Получаем локатор textarea
         return super().get_locator(**kwargs).locator('textarea').first
 
     def fill(self, value: str, **kwargs):
