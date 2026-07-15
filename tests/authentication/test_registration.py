@@ -15,6 +15,10 @@ from allure_commons.types import Severity
 @allure.epic(AllureEpic.LMS)
 @allure.feature(AllureFeature.AUTHENTICATION)
 @allure.story(AllureStory.REGISTRATION)
+
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.AUTHENTICATION)
+@allure.sub_suite(AllureStory.REGISTRATION)
 class TestRegistration:
     @allure.title("Registration with correct email, username and password")
     @allure.severity(Severity.CRITICAL)
@@ -25,7 +29,7 @@ class TestRegistration:
     ) -> None:
         registration_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
 
-        registration_page.registration_form_component.fill(
+        registration_page.registration_form.fill(
             email="user.name@gmail.com",
             username="username",
             password="password"
