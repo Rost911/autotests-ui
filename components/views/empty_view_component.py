@@ -14,7 +14,7 @@ class EmptyViewComponent(BaseComponent):
         self.title = Text(page, f'{identifier}-empty-view-title-text', 'Title')
         self.description = Text(page, f'{identifier}-empty-view-description-text', 'Description')
 
-    @allure.step('Check visible empty view "{title}"')
+    @allure.step('Check visible empty view "{title}", "{description}"')
     def check_visible(self, title: str, description: str):
         self.icon.check_visible()
 

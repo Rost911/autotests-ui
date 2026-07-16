@@ -1,5 +1,5 @@
 from playwright.sync_api import Page, expect
-
+import allure
 from components.base_component import BaseComponent
 from elements.button import Button
 from elements.text import Text
@@ -13,6 +13,10 @@ class CreateCourseToolbarViewComponent(BaseComponent):
                                            'create-course-toolbar-create-course-button',
                                            'Create Course Button')
 
+    @allure.step(
+        'Check create course toolbar is visible '
+        'and create course button disabled="{is_create_course_disabled}"'
+    )
     def check_visible(
             self,
             is_create_course_disabled: bool = True,
