@@ -7,6 +7,8 @@ from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
 from tools.allure.stories import AllureStory
 from allure_commons.types import Severity
+from tools.routes import AppRoute
+from config import settings
 
 
 @pytest.mark.courses
@@ -25,11 +27,9 @@ class TestCourses:
             self,
             courses_list_page: CoursesListPage,
     ) -> None:
-        courses_list_page.visit(
-            "https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses"
-        )
+        courses_list_page.visit(AppRoute.COURSES)
 
-        courses_list_page.navbar.check_visible("username")
+        courses_list_page.navbar.check_visible(settings.test_user.username)
         courses_list_page.sidebar.check_visible()
 
         courses_list_page.toolbar_view.check_visible()
@@ -42,9 +42,7 @@ class TestCourses:
             create_course_page: CreateCoursePage,
             courses_list_page: CoursesListPage,
     ) -> None:
-        create_course_page.visit(
-            "https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create"
-        )
+        create_course_page.visit(AppRoute.COURSES_CREATE)
 
         create_course_page.create_course_toolbar_view_component.check_visible()
 
@@ -65,7 +63,7 @@ class TestCourses:
         create_course_page.check_visible_exercises_empty_view()
 
         create_course_page.image_upload_widget.upload_preview_image(
-            "./testdata/files/image.png"
+            settings.test_data.image_png_file
         )
 
         create_course_page.image_upload_widget.check_visible(
@@ -94,7 +92,7 @@ class TestCourses:
     @allure.title("Edit course")
     @allure.severity(Severity.CRITICAL)
     def test_edit_course(self, create_course_page: CreateCoursePage, courses_list_page: CoursesListPage) -> None:
-        courses_list_page.visit(" https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create")
+        courses_list_page.visit(AppRoute.COURSES_CREATE)
         create_course_page.create_course_toolbar_view_component.check_visible()
 
         create_course_page.image_upload_widget.check_visible(
@@ -114,7 +112,7 @@ class TestCourses:
         create_course_page.check_visible_exercises_empty_view()
 
         create_course_page.image_upload_widget.upload_preview_image(
-            "./testdata/files/image.png"
+            settings.test_data.image_png_file
         )
 
         create_course_page.image_upload_widget.check_visible(
@@ -130,7 +128,6 @@ class TestCourses:
         )
 
         create_course_page.create_course_toolbar_view_component.click_create_course_button()
-
 
         courses_list_page.toolbar_view.check_visible()
         courses_list_page.course_view.check_visible(
@@ -151,7 +148,6 @@ class TestCourses:
             min_score="22",
         )
 
-
         create_course_page.create_course_toolbar_view_component.click_create_course_button()
         courses_list_page.toolbar_view.check_visible()
         courses_list_page.course_view.check_visible(
@@ -161,4 +157,3 @@ class TestCourses:
             max_score="777",
             min_score="22",
         )
-

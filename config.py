@@ -38,6 +38,9 @@ class Settings(BaseSettings):
     tracing_dir: DirectoryPath
     browser_state_file: FilePath
 
+    def get_base_url(self) -> str:
+        return f"{self.app_url}/"
+
     # Added initialize method
     @classmethod
     def initialize(cls) -> Self:  # Returns an instance of the Settings class
