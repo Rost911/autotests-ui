@@ -1,0 +1,65 @@
+# The name of your workflow that will be displayed in the GitHub Actions interface
+name: UI tests
+
+# Specify when this workflow should be triggered
+on:
+  push:
+    branches:
+      - main  # Run the workflow when a commit is pushed to the main branch
+  pull_request:
+    branches:
+      - main  # Run the workflow when a pull request is created for the main branch
+
+# Define all jobs that should be executed as part of the test workflow
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest  # Run the tests on the latest Ubuntu version
+
+    steps:
+      # 1. Clone your repository to the GitHub Actions runner
+      - name: Check out repository
+        uses: actions/checkout@v4  # Use the GitHub Action to clone the repository
+
+      # 2. Set up Python on the virtual machine
+      - name: Set up Python
+        uses: actions/setup-python@v4  # Use the GitHub Action to install Python
+        with:
+          python-version: '3.11'  # Install Python 3.11 (can be changed if needed)
+
+      # 3. Install all project dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip  # Upgrade pip to the latest version
+          pip install -r requirements.txt  # Install dependencies listed in requirements.txt
+          playwright install --with-deps  # Install Playwright browsers and required dependencies
+
+      # 4. Run pytest tests and generate Allure results
+      - name: Run Playwright tests with pytest and generate Allure results
+        run: |
+          pytest -m regression --alluredir=allure-results --numprocesses 2  # Run regression tests and generate Allure results
+
+      # 5. Retrieve Allure report history if it exists
+      - name: Get Allure history
+        uses: actions/checkout@v4  # Clone the repository again to retrieve report history
+        if: always()  # Always execute this step regardless of previous step results
+        continue-on-error: true  # Continue the workflow even if this step fails
+        with:
+          ref: gh-pages  # Checkout the gh-pages branch containing previous reports
+          path: gh-pages  # Save the branch contents to the gh-pages directory
+
+      # 6. Generate the Allure report with history
+      - name: Generate Allure Report with history
+        uses: simple-elf/allure-report-action@v1.7  # Use the GitHub Marketplace action to generate the Allure report
+        if: always()  # Always execute this step
+        with:
+          allure_results: allure-results  # Directory containing test results
+          allure_history: allure-history  # Directory where Allure report history will be stored
+
+      # 7. Deploy the Allure report to GitHub Pages
+      - name: Deploy report to GitHub Pages
+        if: always()  # Always execute this step regardless of previous step results
+        uses: peaceiris/actions-gh-pages@v4  # Use the GitHub Action to publish the report to GitHub Pages
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub authentication token
+          publish_branch: gh-pages  # Publish the report to the gh-pages branch
+          publish_dir: allure-history  # Publish the allure-history directory to GitHub Pages
