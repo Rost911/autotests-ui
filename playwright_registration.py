@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright, expect
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     page = browser.new_page()
 
     page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
@@ -31,7 +31,7 @@ from playwright.sync_api import sync_playwright
 # Open the browser using Playwright
 with sync_playwright() as playwright:
     # Launch Chromium browser in headed mode (not headless)
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
 
     # Create a new browser context (new session isolated from others)
     context = browser.new_context()
@@ -57,7 +57,7 @@ with sync_playwright() as playwright:
     context.storage_state(path="browser-state.json")
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
 
     context = browser.new_context(
         storage_state="browser-state.json"  # Specify the file with the saved state

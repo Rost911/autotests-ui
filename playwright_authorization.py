@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright, expect
 
 with sync_playwright() as playwright:
     
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     page = browser.new_page()
 
 

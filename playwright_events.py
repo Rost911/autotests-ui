@@ -13,7 +13,7 @@ def log_response(response: Response):
 
 with sync_playwright() as playwright:
     # Open the browser and create a new page
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     page = browser.new_page()
 
     # Add event handlers
